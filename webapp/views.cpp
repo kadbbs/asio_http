@@ -76,79 +76,42 @@ void print_req(request& req){
 
 }
 
-std::string  render(request& req) {
+//std::string  render(request& req) {
+//
+//    print_req(req);
+//    json::object response_json;
+//    response_json["message"] = "Hello, world!";
+//
+//    response_json["status"] = "success";
+//    response_json["mes"]={response_json["message"],response_json["status"]};
+//
+//    std::string json_str = json::serialize(response_json);
+//
+//
+//    return json_str;
+//
+//}
+//
+//std::string savefile(request &req) {
+//
+//    print_req(req);
+//    std::string filetype;
+//
+//
+//        save_file(req.content, "./uploaded_file." + filetype);
+//
+//        json::object response_json;
+//        response_json["filesave"] = "Ture";
+//        std::string json_str = json::serialize(response_json);
+//
+//        return json_str;
+//}
 
-    print_req(req);
-    json::object response_json;
-    response_json["message"] = "Hello, world!";
-
-    response_json["status"] = "success";
-    response_json["mes"]={response_json["message"],response_json["status"]};
-
-    std::string json_str = json::serialize(response_json);
-
-
-    return json_str;
-
+std::string render(h_context &c) {
+    return std::string();
 }
 
-std::string savefile(request &req) {
-
-    print_req(req);
-    std::string filetype;
-
-
-        save_file(req.content, "./uploaded_file." + filetype);
-
-        json::object response_json;
-        response_json["filesave"] = "Ture";
-        std::string json_str = json::serialize(response_json);
-
-        return json_str;
+std::string savefile(h_context &c) {
+    return std::string();
 }
 
-//void test_fun() {
-//    static int i = 0;
-//    std::cout << "testPath is run count : " << i++ << std::endl;
-//}
-
-
-//    if(req.headers[5].value.find("multipart/form-data")){
-//        bfenge=req.headers[5].value.substr(sizeof("multipart/form-data; boundary="));
-//    }
-//    std::vector<string> vStr;
-//    boost::split(vStr, content, boost::is_any_of(bfenge), boost::token_compress_on);
-//
-//    for(auto it=vStr[1].begin();it!=vStr[1].end();it++){
-//
-//    }
-//    std::cout<<"req formdata : \n " <<"\n";
-//
-//    for(int i=0;i<1000;i++){
-//            std::cout<<vStr[1][i];
-//    }
-
-
-//    std::regex pattern(R"(.*(%PDF.*)----.*)");
-//    std::smatch match;
-//
-//    if (std::regex_search(content, match, pattern)) {
-//        if (match.size() > 1) {
-//            std::string result = match[1].str();
-//            std::cout << "Extracted string: "  << std::endl;
-//            std::cout << "result string size : " << result.size() << std::endl;
-//
-//            save_file(result, "./uploaded_file.pdf");
-//
-//        } else {
-//            std::cout << "No match found." << std::endl;
-//        }
-//    } else {
-//        std::cout << "No match found." << std::endl;
-//    }
-
-//for (const auto &h: req.body_headers) {
-//if (h.name == "Content-Type") {
-//filetype = h.value;
-//}
-//}

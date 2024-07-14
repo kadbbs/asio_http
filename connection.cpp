@@ -13,7 +13,7 @@
 #include <vector>
 #include "connection_manager.hpp"
 #include "request_handler.hpp"
-
+#include "h_context.h"
 
 
 namespace http {
@@ -58,10 +58,12 @@ namespace http {
 
                                                 request_.get_boundary();
                                                 request_.extract_content();
+                                                h_context hc(request_,reply_);
+
                                                 auto it= urlpatterns.find(request_.uri);
                                                 if (it != urlpatterns.end()) {
 
-                                                    response_content=it->second(request_);
+                                                    response_content=it->second(hc);
                                                 } else {
                                                     std::cout << "Handler for " << request_.uri << " not found." << std::endl;
                                                 }

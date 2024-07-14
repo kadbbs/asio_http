@@ -7,12 +7,20 @@
 #include <boost/asio.hpp>
 #include "../request.hpp"
 #include "../connection.hpp"
+#include "../h_context.h"
 using request=http::server::request;
 
-// 函数声明
-std::string render(request &req);
+using h_context=http::server::h_context;
 
-std::string savefile(request &req);
+// 函数声明
+
+std::string render(h_context &c);
+
+std::string savefile(h_context &c);
+
+//std::string render(request &req);
+//
+//std::string savefile(request &req);
 
 
 
