@@ -112,6 +112,19 @@ std::string render(h_context &c) {
 }
 
 std::string savefile(h_context &c) {
-    return std::string();
+        print_req(c.request_);
+        std::string filetype;
+
+
+        save_file(c.request_.content, "./uploaded_file." + filetype);
+
+        json::object response_json;
+        response_json["h"] = "Ture";
+        std::string json_str = json::serialize(response_json);
+
+
+        c.reply_.josnstr(json_str);
+
+    return "";
 }
 

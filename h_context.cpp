@@ -5,6 +5,6 @@
 #include "h_context.h"
 
 
-http::server::h_context::h_context(http::server::request request, http::server::reply reply) : request_(request),reply_(reply){
+http::server::h_context::h_context(http::server::request& request, http::server::reply& reply) : request_(request),reply_(reply){
 
 }

@@ -11,11 +11,11 @@ namespace http {
     namespace server {
         struct h_context {
 
-            h_context(request request,reply reply);
+            h_context(request& request,reply& reply);
 
 
-            request request_;
-            reply reply_;
+            request& request_;
+            reply& reply_;
 
         };
     }}

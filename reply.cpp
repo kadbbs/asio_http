@@ -280,5 +280,23 @@ namespace http {
             return rep;
         }
 
+        std::string reply::josnfile(const std::string path) {
+            return std::string();
+        }
+
+        std::string reply::josnobj(boost::json::object response_json) {
+            return std::string();
+        }
+
+        void reply::josnstr(const std::string data) {
+            content=data;
+            status=ok;
+            //                                                reply_.headers.na
+            headers[1].value="application/json";
+            headers[0].value = std::to_string(content.size());
+
+
+        }
+
     } // namespace server
 } // namespace http

@@ -15,6 +15,7 @@
 #include <vector>
 #include <boost/asio.hpp>
 #include <iostream>
+#include <boost/json/object.hpp>
 #include "header.hpp"
 
 namespace http {
@@ -60,6 +61,18 @@ namespace http {
             /// underlying memory blocks, therefore the reply object must remain valid and
             /// not be changed until the write operation has completed.
             std::vector<boost::asio::const_buffer> to_buffers();
+
+
+            /// 根据用户的输入修改响应
+            std::string josnfile(const std::string path);
+            std::string josnobj(boost::json::object response_json);
+            void josnstr(const std::string data);
+
+            std::string text(const std::string path);
+            std::string html(const std::string path);
+            std::string xml(const std::string path);
+            std::string file(const std::string path);
+            void redirect(const std::string url);
 
             /// Get a stock reply.
             static reply stock_reply(status_type status);

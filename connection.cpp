@@ -68,11 +68,9 @@ namespace http {
                                                     std::cout << "Handler for " << request_.uri << " not found." << std::endl;
                                                 }
 
-                                                reply_.content=response_content;
+//                                                reply_.content=response_content;
 
-//                                                reply_.headers.na
-                                                reply_.headers[1].value="application/json";
-                                                reply_.headers[0].value = std::to_string(reply_.content.size());
+
 
                                                 do_write();
                                             }
