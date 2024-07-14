@@ -1,4 +1,0 @@
-/home/bbs/code/cpp/asio_http/cmake-build-debug/CMakeFiles/asio_http.dir
-/home/bbs/code/cpp/asio_http/cmake-build-debug/CMakeFiles/websocket.dir
-/home/bbs/code/cpp/asio_http/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/bbs/code/cpp/asio_http/cmake-build-debug/CMakeFiles/rebuild_cache.dir
