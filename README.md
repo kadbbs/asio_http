@@ -4,8 +4,7 @@
 
 ***
 
-asio_http is an easy-to-use client library for making requests from Boost::Asio. It uses a simple method chaining system for building requests, similar to Python's Requests.
-
+ASIO_HTTP is a free, cross-platform HTTP server framework that uses Boost::asio to handle network services. Its API is similar to the Python Django framework.
 
 
 
