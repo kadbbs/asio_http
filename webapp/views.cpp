@@ -8,12 +8,24 @@
 #include <boost/json.hpp>
 #include <boost/algorithm/string/split.hpp>
 #include <boost/algorithm/string/classification.hpp>
+#include "../utils.h"
 
 using namespace boost::json;
 
 namespace net = boost::asio;
 namespace json = boost::json;
 using tcp = boost::asio::ip::tcp;
+
+std::string extract_filename(const std::string& str) {
+    std::string::size_type start = str.find('"');
+    std::string::size_type end = str.find('"', start + 1);
+
+    if (start != std::string::npos && end != std::string::npos) {
+        return str.substr(start + 1, end - start - 1);
+    }
+    return ""; // 返回空字符串表示未找到
+}
+
 //std::string get_boundary(const http::server::request& req) {
 //    for (const auto& h : req.headers) {
 //        if (h.name == "Content-Type") {
@@ -54,27 +66,7 @@ void save_file(const std::string& content, const std::string& filename)
     }
 }
 
-void print_req(request& req){
-    std::cout << "render is run "<< std::endl;
 
-    std::cout<<"req method is " << req.method<<"\n";
-    std::cout<<"req uri is " << req.uri<<"\n";
-
-    std::cout<<"req http_version_major is " << req.http_version_major<<"\n";
-
-    std::cout<<"req http_version_minor is " << req.http_version_minor<<"\n";
-
-
-    for (auto iter = req.headers.begin(); iter != req.headers.end(); iter++) {
-        std::cout <<"header.name : "<< (*iter).name;
-        std::cout <<"---->header.value : "<<(*iter).value << std::endl;
-
-    }
-    std::cout<<"req body boundary is " << req.boundary<<"\n";
-    std::cout<<"req header str is "<< req.body_hstr<<"\n";
-
-
-}
 
 //std::string  render(request& req) {
 //
@@ -107,16 +99,23 @@ void print_req(request& req){
 //        return json_str;
 //}
 
-std::string render(h_context &c) {
-    return std::string();
+void render(h_context &c) {
+    ;
 }
 
-std::string savefile(h_context &c) {
-        print_req(c.request_);
-        std::string filetype;
+void savefile(h_context &c) {
+        utils::print_req(c.request_);
+        std::string filename;
 
 
-        save_file(c.request_.content, "./uploaded_file." + filetype);
+
+        for(auto it:c.request_.body_vhs){
+            if(std::string::npos!=it.find("filename=")){
+                filename = extract_filename(it);
+            }
+        }
+
+        save_file(c.request_.content, filename);
 
         json::object response_json;
         response_json["h"] = "Ture";
@@ -125,6 +124,6 @@ std::string savefile(h_context &c) {
 
         c.reply_.josnstr(json_str);
 
-    return "";
+
 }
 

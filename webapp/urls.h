@@ -15,6 +15,6 @@ using h_context=http::server::h_context;
 // 外部声明全局变量
 //        extern std::map<std::string, std::function<void()>> url_map;
 //        extern std::map<std::string, std::function<std::string (request &)>> urlpatterns;
-        extern std::map<std::string, std::function<std::string (h_context &)>> urlpatterns;
+        extern std::map<std::string, std::function<void (h_context &)>> urlpatterns;
 
 #endif // ASIO_HTTP_URLS_H

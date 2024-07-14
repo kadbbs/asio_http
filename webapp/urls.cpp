@@ -19,7 +19,7 @@ using h_context=http::server::h_context;
 //};
 
 
-std::map<std::string, std::function<std::string (h_context &)>> urlpatterns={
+std::map<std::string, std::function<void (h_context &)>> urlpatterns={
         {"/main.cpp", render},
         {"/upload", savefile},
 };

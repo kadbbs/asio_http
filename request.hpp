@@ -32,6 +32,7 @@ namespace http {
             std::string boundary;
             std::string content;
             std::vector<header> body_headers;
+            std::vector<std::string> body_vhs;
             std::string body_hstr;
 
 

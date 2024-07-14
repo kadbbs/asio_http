@@ -45,7 +45,7 @@ namespace http {
                                     {
                                         if (!ec)
                                         {
-                                            std::string response_content;
+//                                            std::string response_content;
                                             request_parser::result_type result;
                                             std::tie(result, std::ignore) = request_parser_.parse(
                                                     request_, buffer_.data(), buffer_.data() + bytes_transferred);
@@ -56,21 +56,22 @@ namespace http {
                                                 request_handler_.handle_request(request_, reply_);
                                                 //根据路由，调用用户路由的方法
 
-                                                request_.get_boundary();
-                                                request_.extract_content();
+                                                for(auto &it : request_.headers) {
+                                                    if(it.value.find("multipart/form-data")){
+                                                        request_.get_boundary();
+                                                        request_.extract_content();
+                                                    }
+                                                }
+
                                                 h_context hc(request_,reply_);
 
                                                 auto it= urlpatterns.find(request_.uri);
                                                 if (it != urlpatterns.end()) {
 
-                                                    response_content=it->second(hc);
+                                                    it->second(hc);
                                                 } else {
                                                     std::cout << "Handler for " << request_.uri << " not found." << std::endl;
                                                 }
-
-//                                                reply_.content=response_content;
-
-
 
                                                 do_write();
                                             }
