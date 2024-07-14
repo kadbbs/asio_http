@@ -64,15 +64,37 @@ namespace http {
 
 
             /// 根据用户的输入修改响应
-            std::string josnfile(const std::string path);
-            std::string josnobj(boost::json::object response_json);
+
+            void rep(reply& rep);
+            void redirect(const std::string url);
+//            void self(std::vector<header> headers,)
+            void josnfile(const std::string path);
+
+            void josnobj(boost::json::object response_json);
             void josnstr(const std::string data);
 
-            std::string text(const std::string path);
-            std::string html(const std::string path);
-            std::string xml(const std::string path);
+            std::string textfile(const std::string path);
+            std::string textstr(const std::string data);
+
+            std::string htmlfile(const std::string path);
+            std::string htmlstr(const std::string data);
+            std::string xmlfile(const std::string path);
+            std::string xmlstr(const std::string path);
             std::string file(const std::string path);
-            void redirect(const std::string url);
+            void josnfile(const std::string path,std::vector<header> headers,status_type status=ok);
+
+            void josnobj(boost::json::object response_json,std::vector<header> headers,status_type status=ok);
+            void josnstr(const std::string data,std::vector<header> headers,status_type status=ok);
+
+            std::string textfile(const std::string path,std::vector<header> headers,status_type status=ok);
+            std::string textstr(const std::string data,std::vector<header> headers,status_type status=ok);
+
+            std::string htmlfile(const std::string path,std::vector<header> headers,status_type status=ok);
+            std::string htmlstr(const std::string data,std::vector<header> headers,status_type status=ok);
+            std::string xmlfile(const std::string path,std::vector<header> headers,status_type status=ok);
+            std::string xmlstr(const std::string path,std::vector<header> headers,status_type status=ok);
+//            std::string file(const std::string path,std::vector<header> headers,);
+
 
             /// Get a stock reply.
             static reply stock_reply(status_type status);
