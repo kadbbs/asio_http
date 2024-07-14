@@ -39,7 +39,6 @@ namespace http {
             std::string extract_content();
 
 
-
         };
 
 

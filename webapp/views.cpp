@@ -95,7 +95,22 @@ std::string  render(request& req) {
 std::string savefile(request &req) {
 
     print_req(req);
+    std::string filetype;
 
+
+        save_file(req.content, "./uploaded_file." + filetype);
+
+        json::object response_json;
+        response_json["filesave"] = "Ture";
+        std::string json_str = json::serialize(response_json);
+
+        return json_str;
+}
+
+//void test_fun() {
+//    static int i = 0;
+//    std::cout << "testPath is run count : " << i++ << std::endl;
+//}
 
 
 //    if(req.headers[5].value.find("multipart/form-data")){
@@ -132,33 +147,8 @@ std::string savefile(request &req) {
 //        std::cout << "No match found." << std::endl;
 //    }
 
-
-
-
-    std::string filetype;
-    for (const auto &h: req.body_headers) {
-        if (h.name == "Content-Type") {
-            filetype = h.value;
-
-
-        }
-    }
-
-        save_file(req.content, "./uploaded_file." + filetype);
-
-
-        json::object response_json;
-        response_json["filesave"] = "Ture";
-
-
-        std::string json_str = json::serialize(response_json);
-
-
-        return json_str;
-
-}
-
-//void test_fun() {
-//    static int i = 0;
-//    std::cout << "testPath is run count : " << i++ << std::endl;
+//for (const auto &h: req.body_headers) {
+//if (h.name == "Content-Type") {
+//filetype = h.value;
+//}
 //}
