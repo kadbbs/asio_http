@@ -278,6 +278,7 @@ namespace http {
                 case expecting_newline_3:
 //                    return (input == '\n') ? good : bad;
                     if (input == '\n') {
+
                         state_ = body;
                         return indeterminate;
                     }
@@ -286,6 +287,7 @@ namespace http {
                     }
                 case body:
                     req.body.push_back(input);
+
                     if (req.body.size() >= std::atoi(req.headers[6].value.c_str())) {
                         state_ = done;
                         return good;

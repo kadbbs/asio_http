@@ -99,8 +99,18 @@ void save_file(const std::string& content, const std::string& filename)
 //        return json_str;
 //}
 
-void render(h_context &c) {
-    ;
+
+
+void remaincpp(h_context &c){
+    utils::print_req(c.request_);
+    json::object response_json;
+    response_json["main.cpp"] = "Ture";
+    std::string json_str = json::serialize(response_json);
+
+
+    c.reply_.josnstr(json_str);
+
+
 }
 
 void savefile(h_context &c) {

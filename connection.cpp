@@ -58,8 +58,11 @@ namespace http {
 
                                                 for(auto &it : request_.headers) {
                                                     if(it.value.find("multipart/form-data")){
-                                                        request_.get_boundary();
-                                                        request_.extract_content();
+                                                        if(request_.body.size()!=0){
+                                                            request_.get_boundary();
+                                                            request_.extract_content();
+                                                        }
+
                                                     }
                                                 }
 

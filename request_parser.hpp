@@ -12,6 +12,7 @@
 #define HTTP_REQUEST_PARSER_HPP
 
 #include <tuple>
+#include <iostream>
 
 namespace http {
     namespace server {
@@ -29,7 +30,7 @@ namespace http {
             void reset();
 
             /// Result of parse.
-            enum result_type { good, bad, indeterminate };
+            enum result_type { good, bad, indeterminate};
 
             /// Parse some data. The enum return value is good when a complete request has
             /// been parsed, bad if the data is invalid, indeterminate when more data is
@@ -39,11 +40,17 @@ namespace http {
             std::tuple<result_type, InputIterator> parse(request& req,
                                                          InputIterator begin, InputIterator end)
             {
+                std::cout<<"InputIterator begin is \n"<<begin<<"\n";
                 while (begin != end)
                 {
+
                     result_type result = consume(req, *begin++);
-                    if (result == good || result == bad)
+                    if (result == good || result == bad||(begin==end&&state_==body)){
+                        result=good;
                         return std::make_tuple(result, begin);
+
+                    }
+
                 }
                 return std::make_tuple(indeterminate, begin);
             }
