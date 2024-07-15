@@ -51,10 +51,9 @@ void utils::print_req(request &req) {
         std::cout <<"---->header.value : "<<(*iter).value << std::endl;
 
     }
+    std::cout<<"req body  is " << req.body<<"\n";
+
     std::cout<<"req body boundary is " << req.boundary<<"\n";
     std::cout<<"req header str is "<< req.body_hstr<<"\n";
-
-
-
 
 }

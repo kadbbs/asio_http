@@ -15,7 +15,7 @@ using h_context=http::server::h_context;
 // 函数声明
 
 void render(h_context &c);
-
+void remaincpp(h_context &c);
 void savefile(h_context &c);
 
 //std::string render(request &req);
