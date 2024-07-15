@@ -13,5 +13,7 @@ using request=http::server::request;
 
 std::map<std::string, std::function<std::string (request&)>> urlpatterns = {
         {"/main.cpp", render},
+        {"/makefile", render},
+
         {"/upload", savefile},
 };
