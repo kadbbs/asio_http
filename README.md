@@ -23,8 +23,7 @@ boost::asio boost::json
 1、在webapp/urls.cpp中添加,"/uploda"是路由，savefile是views.cpp中的函数。
 ```c++
 
-std::map<std::string, std::function<std::string (request&)>> urlpatterns = {
-        {"/main.cpp", render},
+std::map<std::string, std::function<void (request&)>> urlpatterns = {
         {"/upload", savefile},
 };
 
@@ -34,19 +33,28 @@ std::map<std::string, std::function<std::string (request&)>> urlpatterns = {
 
 2、views.cpp中的函数例子
 ```c++
-std::string savefile(request &req) {
+void savefile(h_context &c) {
+        utils::print_req(c.request_);
+        std::string filename;
 
-    print_req(req);
-    std::string filetype;
 
 
-        save_file(req.content, "./uploaded_file." + filetype);
+        for(auto it:c.request_.body_vhs){
+            if(std::string::npos!=it.find("filename=")){
+                filename = extract_filename(it);
+            }
+        }
+
+        save_file(c.request_.content, filename);
 
         json::object response_json;
-        response_json["filesave"] = "Ture";
+        response_json["h"] = "Ture";
         std::string json_str = json::serialize(response_json);
-        
-        return json_str;
+
+
+        c.reply_.josnstr(json_str);
+
+
 }
 
 ```
@@ -67,7 +75,10 @@ request结构为
             std::string boundary;
             std::string content;
             std::vector<header> body_headers;
+            std::vector<std::string> body_vhs;
+
             std::string body_hstr;
+            
 
 
             std::string get_boundary() ;

@@ -15,6 +15,7 @@
 #include <vector>
 #include <boost/asio.hpp>
 #include <iostream>
+#include <boost/json/object.hpp>
 #include "header.hpp"
 
 namespace http {
@@ -60,6 +61,40 @@ namespace http {
             /// underlying memory blocks, therefore the reply object must remain valid and
             /// not be changed until the write operation has completed.
             std::vector<boost::asio::const_buffer> to_buffers();
+
+
+            /// 根据用户的输入修改响应
+
+            void rep(reply& rep);
+            void redirect(const std::string url);
+//            void self(std::vector<header> headers,)
+            void josnfile(const std::string path);
+
+            void josnobj(boost::json::object response_json);
+            void josnstr(const std::string data);
+
+            std::string textfile(const std::string path);
+            std::string textstr(const std::string data);
+
+            std::string htmlfile(const std::string path);
+            std::string htmlstr(const std::string data);
+            std::string xmlfile(const std::string path);
+            std::string xmlstr(const std::string path);
+            std::string file(const std::string path);
+            void josnfile(const std::string path,std::vector<header> headers,status_type status=ok);
+
+            void josnobj(boost::json::object response_json,std::vector<header> headers,status_type status=ok);
+            void josnstr(const std::string data,std::vector<header> headers,status_type status=ok);
+
+            std::string textfile(const std::string path,std::vector<header> headers,status_type status=ok);
+            std::string textstr(const std::string data,std::vector<header> headers,status_type status=ok);
+
+            std::string htmlfile(const std::string path,std::vector<header> headers,status_type status=ok);
+            std::string htmlstr(const std::string data,std::vector<header> headers,status_type status=ok);
+            std::string xmlfile(const std::string path,std::vector<header> headers,status_type status=ok);
+            std::string xmlstr(const std::string path,std::vector<header> headers,status_type status=ok);
+//            std::string file(const std::string path,std::vector<header> headers,);
+
 
             /// Get a stock reply.
             static reply stock_reply(status_type status);

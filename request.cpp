@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include "request.hpp"
+#include "utils.h"
 //http::server::request::request():method(nullptr),uri(nullptr),http_version_major(-1),http_version_minor(-1),body(nullptr),boundary(nullptr),content(nullptr) {
 //
 //
@@ -49,6 +50,12 @@ std::string http::server::request::extract_content() {
         return "";
     }
     body_hstr=body.substr(pos, headers_end - pos);
+
+    std::vector<std::string> delimiters = {";", "\r\n"};
+
+
+
+    body_vhs=utils::split(body_hstr,delimiters);
 
     std::string headers = body_hstr;
     pos = headers_end + 4; // Skip the headers and the terminating \r\n\r\n

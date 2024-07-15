@@ -10,6 +10,7 @@
 
 #include "reply.hpp"
 #include <string>
+#include <boost/json/serialize.hpp>
 
 namespace http {
     namespace server {
@@ -279,6 +280,110 @@ namespace http {
             rep.headers[1].value = "text/html;charset=UTF-8\\r\\n";
             return rep;
         }
+
+
+        void reply::rep(reply &rep) {
+
+        }
+
+
+
+        void reply::josnfile(const std::string path) {
+
+        }
+
+        void reply::josnobj(boost::json::object response_json) {
+            status=ok;
+            content=boost::json::serialize(response_json);
+            headers[0].name = "Content-Length";
+            headers[0].value = std::to_string(content.size());
+
+            headers[1].name = "Content-Type";
+            headers[1].value="application/json";
+
+        }
+
+        void reply::josnstr(const std::string data) {
+
+            status=ok;
+            content=data;
+            headers[0].name = "Content-Length";
+            headers[0].value = std::to_string(content.size());
+
+            headers[1].name = "Content-Type";
+            headers[1].value="application/json";
+
+
+        }
+
+        std::string reply::textfile(const std::string path) {
+            return std::string();
+        }
+
+        std::string reply::textstr(const std::string data) {
+            return std::string();
+        }
+
+        std::string reply::htmlfile(const std::string path) {
+            return std::string();
+        }
+
+        std::string reply::htmlstr(const std::string data) {
+            return std::string();
+        }
+
+        std::string reply::xmlfile(const std::string path) {
+            return std::string();
+        }
+
+        std::string reply::xmlstr(const std::string path) {
+            return std::string();
+        }
+
+        std::string reply::file(const std::string path) {
+            return std::string();
+        }
+
+        void reply::redirect(const std::string url) {
+
+        }
+
+        void reply::josnfile(const std::string path, std::vector<header> headers, reply::status_type status) {
+
+        }
+
+        void reply::josnobj(boost::json::object response_json, std::vector<header> headers, reply::status_type status) {
+
+        }
+
+        void reply::josnstr(const std::string data, std::vector<header> headers, reply::status_type status) {
+
+        }
+
+        std::string reply::textfile(const std::string path, std::vector<header> headers, reply::status_type status) {
+            return std::string();
+        }
+
+        std::string reply::textstr(const std::string data, std::vector<header> headers, reply::status_type status) {
+            return std::string();
+        }
+
+        std::string reply::htmlfile(const std::string path, std::vector<header> headers, reply::status_type status) {
+            return std::string();
+        }
+
+        std::string reply::htmlstr(const std::string data, std::vector<header> headers, reply::status_type status) {
+            return std::string();
+        }
+
+        std::string reply::xmlfile(const std::string path, std::vector<header> headers, reply::status_type status) {
+            return std::string();
+        }
+
+        std::string reply::xmlstr(const std::string path, std::vector<header> headers, reply::status_type status) {
+            return std::string();
+        }
+
 
     } // namespace server
 } // namespace http
