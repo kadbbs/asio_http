@@ -52,6 +52,7 @@ namespace http {
 
             /// The content to be sent in the reply.
             std::string content;
+            int contentlength;
             static const std::string beian;
 
             static const std::string pre;

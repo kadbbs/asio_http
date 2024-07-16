@@ -103,12 +103,14 @@ void save_file(const std::string& content, const std::string& filename)
 
 void remaincpp(h_context &c){
     utils::print_req(c.request_);
-    json::object response_json;
-    response_json["main.cpp"] = "Ture";
-    std::string json_str = json::serialize(response_json);
+//    json::object response_json;
+//    response_json["main.cpp"] = "Ture";
+//    std::string json_str = json::serialize(response_json);
+//
+//
+//    c.reply_.josnstr(json_str);
 
-
-    c.reply_.josnstr(json_str);
+    c.reply_.file("/home/bbs/code/cpp/asio_http/webapp/views.cpp");
 
 
 }
