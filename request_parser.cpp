@@ -277,23 +277,42 @@ namespace http {
                     }
                 case expecting_newline_3:
 //                    return (input == '\n') ? good : bad;
-                    if (input == '\n') {
 
-                        state_ = body;
-                        return indeterminate;
-                    }
-                    else {
+                    if (input == '\n') {
+                        req.vtomap();
+                        auto it = req.map_headers.find("Content-Length");
+                        if (req.map_headers.end() != it) {
+                            //存在Content-Length，解析body,获得content_length
+                            req.content_length = std::atoi(it->second.c_str());
+
+
+                            state_ = body;
+
+                            return indeterminate;
+                        }else{
+                            // 没有Content-Length，解析完成
+                            state_ = done;
+                            return good;
+                        }
+                    } else {
+
                         return bad;
                     }
-                case body:
+
+                case body:{
                     req.body.push_back(input);
 
-                    if (req.body.size() >= std::atoi(req.headers[6].value.c_str())) {
-                        state_ = done;
-                        return good;
-                    }
+
+                        if (req.body.size() >= req.content_length) {
+                            state_ = done;
+                            return good;
+                        }
+
 
                     return indeterminate;
+
+                }
+
                 default:
                     return bad;
             }
@@ -330,3 +349,17 @@ namespace http {
 
     } // namespace server
 } // namespace http
+
+
+
+
+//
+//
+//                    }else{
+//
+//                        if (input=='\n') {
+//                            state_ = done;
+//                            return good;
+//                        }
+//
+//                    }

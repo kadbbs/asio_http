@@ -13,11 +13,13 @@
 
 #include <tuple>
 #include <iostream>
+#include "request.hpp"
 
 namespace http {
     namespace server {
 
-        struct request;
+//        struct request;
+
 
 /// Parser for incoming requests.
         class request_parser
@@ -28,6 +30,8 @@ namespace http {
 
             /// Reset to initial parser state.
             void reset();
+
+
 
             /// Result of parse.
             enum result_type { good, bad, indeterminate};
@@ -45,8 +49,9 @@ namespace http {
                 {
 
                     result_type result = consume(req, *begin++);
-                    if (result == good || result == bad||(begin==end&&state_==body)){
+                    if (result == good || result == bad){
                         result=good;
+
                         return std::make_tuple(result, begin);
 
                     }
