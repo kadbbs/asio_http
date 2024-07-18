@@ -11,6 +11,8 @@
 #include "reply.hpp"
 #include <string>
 #include <boost/json/serialize.hpp>
+#include <fstream>
+
 
 namespace http {
     namespace server {
@@ -284,6 +286,7 @@ namespace http {
 
         void reply::rep(reply &rep) {
 
+
         }
 
 
@@ -341,7 +344,51 @@ namespace http {
         }
 
         std::string reply::file(const std::string path) {
-            return std::string();
+
+            std::ifstream inputfile(path, std::ios::binary | std::ios::ate);
+            if (!inputfile) {
+                // 如果文件打开失败，抛出一个运行时错误
+                throw std::runtime_error("Failed to open file");
+            }
+            contentlength = inputfile.tellg();
+            // 将文件读指针移动到文件的开头
+            inputfile.seekg(0, std::ios::beg);
+            content.resize(contentlength);
+            // 读取文件内容到缓冲区
+            if (!inputfile.read(&content[0], contentlength)) {
+                // 如果读取失败，抛出一个运行时错误
+                throw std::runtime_error("Failed to read file");
+            }
+
+            // 查找最后一个斜杠的位置
+            size_t pos = path.find_last_of('/');
+
+            // 提取斜杠后的部分
+            std::string file_name;
+            if (pos != std::string::npos) {
+                file_name = path.substr(pos + 1);
+            } else {
+                file_name = path; // 如果没有斜杠，整个字符串就是文件名
+            }
+
+            status=ok;
+            headers[0].name = "Content-Length";
+            headers[0].value = std::to_string(contentlength);
+
+            headers[1].name = "Content-Type";
+            headers[1].value="application/octet-stream";
+
+
+
+            header tmp;
+            tmp.name="Content-Disposition";
+            tmp.value="attachmentattachment; filename=\""+file_name+"\"";
+            headers.push_back(tmp);
+
+
+            return "";
+
+
         }
 
         void reply::redirect(const std::string url) {

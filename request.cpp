@@ -94,3 +94,11 @@ std::string http::server::request::extract_content() {
 
     return content = body.substr(pos, end - pos - 2); // -2 to remove the trailing \r\n
 }
+
+void http::server::request::vtomap() {
+    for(auto it:headers){
+        std::pair<std::string ,std::string> head(it.name,it.value);
+        map_headers.insert(head);
+    }
+
+}

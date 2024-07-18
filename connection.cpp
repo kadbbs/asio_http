@@ -55,17 +55,15 @@ namespace http {
 
                                                 request_handler_.handle_request(request_, reply_);
                                                 //根据路由，调用用户路由的方法
+                                                //multipart/form-data 解析body date
+                                                if(request_.map_headers.end()!=request_.map_headers.find("Content-Type")){
+                                                    auto it=request_.map_headers.find("Content-Type");
 
-                                                for(auto &it : request_.headers) {
-                                                    if(it.value.find("multipart/form-data")){
-                                                        if(request_.body.size()!=0){
-                                                            request_.get_boundary();
-                                                            request_.extract_content();
-                                                        }
-
+                                                    if(request_.body.size()!=0&&std::string::npos!=it->second.find("multipart/form-data")){
+                                                        request_.get_boundary();
+                                                        request_.extract_content();
                                                     }
                                                 }
-
                                                 h_context hc(request_,reply_);
 
                                                 auto it= urlpatterns.find(request_.uri);

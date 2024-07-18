@@ -51,9 +51,26 @@ void utils::print_req(request &req) {
         std::cout <<"---->header.value : "<<(*iter).value << std::endl;
 
     }
-    std::cout<<"req body  is " << req.body<<"\n";
 
-    std::cout<<"req body boundary is " << req.boundary<<"\n";
-    std::cout<<"req header str is "<< req.body_hstr<<"\n";
+    if(req.map_headers.end()!=req.map_headers.find("Content-Type")){
+
+            auto it=req.map_headers.find("Content-Type");
+
+            if(req.body.size()!=0&&std::string::npos!=it->second.find("multipart/form-data")){
+                std::cout<<"req body boundary is " << req.boundary<<"\n";
+
+            }
+
+    }
+
+    if(req.body.size()!=0){
+        std::cout<<"req body  is \n" << req.body<<"\n";
+
+        std::cout<<"req bodyheader str is \n"<< req.body_hstr<<"\n";
+
+    }
+
+
+
 
 }

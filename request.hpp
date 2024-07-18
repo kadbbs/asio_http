@@ -13,6 +13,7 @@
 
 #include <string>
 #include <vector>
+#include <unordered_map>
 #include "header.hpp"
 
 namespace http {
@@ -27,6 +28,7 @@ namespace http {
             int http_version_major;
             int http_version_minor;
             std::vector<header> headers;
+            std::unordered_map<std::string,std::string> map_headers;
             std::string body;
             int content_length;
             std::string boundary;
@@ -38,6 +40,7 @@ namespace http {
 
             std::string get_boundary() ;
             std::string extract_content();
+            void vtomap();
 
 
         };
