@@ -5,9 +5,9 @@
 #include <vector>
 #include <string>
 #include <boost/asio.hpp>
-#include "../request.hpp"
-#include "../connection.hpp"
-#include "../h_context.h"
+#include "../src/request.hpp"
+#include "../src/connection.hpp"
+#include "../src/h_context.h"
 using request=http::server::request;
 
 using h_context=http::server::h_context;
@@ -17,6 +17,7 @@ using h_context=http::server::h_context;
 void render(h_context &c);
 void remaincpp(h_context &c);
 void savefile(h_context &c);
+void indexpage(h_context &c);
 
 //std::string render(request &req);
 //

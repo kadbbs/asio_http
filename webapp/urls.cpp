@@ -4,7 +4,7 @@
 
 #include "urls.h"
 #include "views.h"
-#include "../h_context.h"
+#include "../src/h_context.h"
 using request=http::server::request;
 using h_context=http::server::h_context;
 
@@ -22,4 +22,5 @@ using h_context=http::server::h_context;
 std::map<std::string, std::function<void (h_context &)>> urlpatterns={
         {"/main.cpp", remaincpp},
         {"/upload", savefile},
+        {"/",indexpage},
 };
