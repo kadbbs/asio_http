@@ -145,8 +145,10 @@ void indexpage(h_context &c) {
     std::string json_str = json::serialize(response_json);
 
 
-    c.reply_.josnstr(json_str);
+    // c.reply_.josnstr(json_str);
+    c.reply_.textstr("int main();");
 
 
 }
 
+void example(h_context& c) {}

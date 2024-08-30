@@ -6,7 +6,5 @@
 #include "views.h"
 #include "../src/h_context.h"
 std::map<std::string, std::function<void (h_context &)>> urlpatterns={
-        {"/main.cpp", remaincpp},
-        {"/upload", savefile},
-        {"/",indexpage},
+    {"/",example}
 };

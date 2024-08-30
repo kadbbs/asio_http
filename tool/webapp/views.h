@@ -12,11 +12,8 @@ using request=http::server::request;
 using h_context=http::server::h_context;
 
 // 函数声明
+void example(h_context &c);
 
-void render(h_context &c);
-void remaincpp(h_context &c);
-void savefile(h_context &c);
-void indexpage(h_context &c);
 
 
 
