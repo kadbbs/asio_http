@@ -151,3 +151,4 @@ void indexpage(h_context &c) {
 
 }
 
+void example(h_context& c) {}
