@@ -8,7 +8,7 @@
 #include <boost/json.hpp>
 #include <boost/algorithm/string/split.hpp>
 #include <boost/algorithm/string/classification.hpp>
-#include "../utils.h"
+#include "../src/utils.h"
 
 using namespace boost::json;
 
@@ -139,3 +139,16 @@ void savefile(h_context &c) {
 
 }
 
+void indexpage(h_context &c) {
+    json::object response_json;
+    response_json["h"] = "Ture";
+    std::string json_str = json::serialize(response_json);
+
+
+    // c.reply_.josnstr(json_str);
+    c.reply_.textstr("int main();");
+
+
+}
+
+void example(h_context& c) {}

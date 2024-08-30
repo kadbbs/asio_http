@@ -283,7 +283,6 @@ namespace http {
             return rep;
         }
 
-
         void reply::rep(reply &rep) {
 
 
@@ -320,27 +319,122 @@ namespace http {
         }
 
         std::string reply::textfile(const std::string path) {
-            return std::string();
+            std::ifstream inputfile(path, std::ios::binary | std::ios::ate);
+            if (!inputfile) {
+                // 如果文件打开失败，抛出一个运行时错误
+                throw std::runtime_error("Failed to open file");
+            }
+            contentlength = inputfile.tellg();
+            // 将文件读指针移动到文件的开头
+            inputfile.seekg(0, std::ios::beg);
+            content.resize(contentlength);
+            // 读取文件内容到缓冲区
+            if (!inputfile.read(&content[0], contentlength)) {
+                // 如果读取失败，抛出一个运行时错误
+                throw std::runtime_error("Failed to read file");
+            }
+
+            // 查找最后一个斜杠的位置
+            size_t pos = path.find_last_of('/');
+
+            // 提取斜杠后的部分
+            std::string file_name;
+            if (pos != std::string::npos) {
+                file_name = path.substr(pos + 1);
+            } else {
+                file_name = path; // 如果没有斜杠，整个字符串就是文件名
+            }
+            const std::string htmlfrontstr=R"(<!DOCTYPE html>
+                                            <html lang="en">
+                                            <head>
+                                            <meta charset="UTF-8">
+                                            <title>Title</title>
+                                            </head>
+                                            <body><pre>)";
+            const std::string htmlendstr="</pre></body> </html>";
+            content=htmlfrontstr+content+htmlendstr;
+
+            headers[0].name = "Content-Length";
+            headers[0].value = std::to_string(content.size());
+            headers[1].name = "Content-Type";
+            headers[1].value = "text/html;charset=UTF-8\\r\\n";
+
+            return "";
         }
 
         std::string reply::textstr(const std::string data) {
-            return std::string();
+            content=data;
+            const std::string htmlfrontstr=R"(<!DOCTYPE html>
+                                            <html lang="en">
+                                            <head>
+                                            <meta charset="UTF-8">
+                                            <title>Title</title>
+                                            </head>
+                                            <body><pre>)";
+            const std::string htmlendstr="</pre></body> </html>";
+            content=htmlfrontstr+content+htmlendstr;
+
+            headers[0].name = "Content-Length";
+            headers[0].value = std::to_string(content.size());
+            headers[1].name = "Content-Type";
+            headers[1].value = "text/html;charset=UTF-8\\r\\n";
+
+            return "";
         }
 
         std::string reply::htmlfile(const std::string path) {
-            return std::string();
+            std::ifstream inputfile(path, std::ios::binary | std::ios::ate);
+            if (!inputfile) {
+                // 如果文件打开失败，抛出一个运行时错误
+                throw std::runtime_error("Failed to open file");
+            }
+            contentlength = inputfile.tellg();
+            // 将文件读指针移动到文件的开头
+            inputfile.seekg(0, std::ios::beg);
+            content.resize(contentlength);
+            // 读取文件内容到缓冲区
+            if (!inputfile.read(&content[0], contentlength)) {
+                // 如果读取失败，抛出一个运行时错误
+                throw std::runtime_error("Failed to read file");
+            }
+
+            headers[0].name = "Content-Length";
+            headers[0].value = std::to_string(content.size());
+
+            // headers[1].name = "Content-Type";
+            // headers[1].value="application/json";
+            headers[1].name = "Content-Type";
+            headers[1].value = "text/html;charset=UTF-8\\r\\n";
+            return "";
         }
 
+
         std::string reply::htmlstr(const std::string data) {
-            return std::string();
+            content=data;
+            headers[0].name = "Content-Length";
+            headers[0].value = std::to_string(content.size());
+
+            // headers[1].name = "Content-Type";
+            // headers[1].value="application/json";
+            headers[1].name = "Content-Type";
+            headers[1].value = "text/html;charset=UTF-8\\r\\n";
+            return "";
         }
 
         std::string reply::xmlfile(const std::string path) {
             return std::string();
         }
 
-        std::string reply::xmlstr(const std::string path) {
-            return std::string();
+        std::string reply::xmlstr(const std::string data) {
+            content=data;
+            headers[0].name = "Content-Length";
+            headers[0].value = std::to_string(content.size());
+
+            // headers[1].name = "Content-Type";
+            // headers[1].value="application/json";
+            headers[1].name = "Content-Type";
+            headers[1].value = "text/html;charset=UTF-8\\r\\n";
+            return "";
         }
 
         std::string reply::file(const std::string path) {
@@ -378,8 +472,6 @@ namespace http {
             headers[1].name = "Content-Type";
             headers[1].value="application/octet-stream";
 
-
-
             header tmp;
             tmp.name="Content-Disposition";
             tmp.value="attachmentattachment; filename=\""+file_name+"\"";
@@ -387,8 +479,6 @@ namespace http {
 
 
             return "";
-
-
         }
 
         void reply::redirect(const std::string url) {

@@ -16,11 +16,19 @@ ASIO_HTTP is a free, cross-platform HTTP server framework that uses Boost::asio 
 boost::asio boost::json
 ```
 
-### Simple
+### Example
+
 
 ***
 
-1、在webapp/urls.cpp中添加,"/uploda"是路由，savefile是views.cpp中的函数。
+1、准备工作
+```
+    git clone xxx
+    cd asio_http
+    ./mkwebapp.sh
+```
+
+2、在webapp/urls.cpp中添加,"/uploda"是路由，savefile是views.cpp中的函数。
 ```c++
 
 std::map<std::string, std::function<void (request&)>> urlpatterns = {
@@ -31,7 +39,7 @@ std::map<std::string, std::function<void (request&)>> urlpatterns = {
 
 
 
-2、views.cpp中的函数例子
+3、views.cpp中的函数例子
 ```c++
 void savefile(h_context &c) {
         utils::print_req(c.request_);
@@ -90,13 +98,14 @@ request结构为
 ```
 
 
-3、run
+4、run
 "Usage: http_server <address> <port> <doc_root>
 
 ```shell
 
-cd cmake-build-debug 
-make 
+ cd build
+ cmake ..
+  
 
 ./asio_http 0.0.0.0 8090 doc_root
 
